@@ -1,0 +1,12 @@
+---
+proxmox_api_host: "192.168.16.3"
+proxmox_api_user: "root@pam"
+proxmox_api_secret: "your_token_secret"
+vm_name: "new-vm"
+vm_id: 100
+proxmox_node: "pve"
+vm_memory: 1024
+vm_cores: 1
+vm_storage: "local-lvm"
+vm_disk_size: "20G"
+vm_network_bridge: "vmbr0"

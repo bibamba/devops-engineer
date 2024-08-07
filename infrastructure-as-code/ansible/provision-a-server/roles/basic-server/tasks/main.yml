@@ -1,0 +1,20 @@
+---
+- name: Create Proxmox VM
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api_host }}"
+    api_user: "{{ proxmox_api_user }}"
+    api_password:: "{{ proxmox_api_secret }}"
+    node: "{{ proxmox_node }}"
+    name: "{{ vm_name }}"
+    vmid: "{{ vm_id }}"
+    memory: "{{ vm_memory }}"
+    cores: "{{ vm_cores }}"
+    ostype: l26
+    net:
+      net0: 'virtio,bridge={{ vm_network_bridge }}'
+    disk:
+      storage: "{{ vm_storage }}"
+      size: "{{ vm_disk_size }}"
+      format: qcow2
+    state: present
+  delegate_to: localhost
