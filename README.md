@@ -1,2 +1,2 @@
-# linux-system-admin
-The Linux System Admin repository is a comprehensive collection of resources, scripts, and tools designed to assist system administrators in managing Linux environments efficiently.
+# devops-engineer
+Welcome to the devops-engineer repository! This project is dedicated to providing a comprehensive collection of tools, scripts, and resources for DevOps engineers and enthusiasts. Whether you're just starting your journey in DevOps or looking to enhance your existing skills, this repository serves as a one-stop shop for best practices, automation techniques, and deployment strategies.
