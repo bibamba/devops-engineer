@@ -1,0 +1,28 @@
+---
+- name: Update system
+  ansible.builtin.apt:
+    update_cahe: yes
+
+- name: Ensure Apache is installed
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+
+- name: Start and enable Apache service 
+  ansible.builtin.service: 
+    name: apache2
+    state: started 
+    enabled: yes 
+
+- name: Create a Directory for the Website
+  ansible.builtin.file:
+    path: "/var/www/{{ your_domain }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+
+- name: Copy custom index.html
+  ansible.builtin.copy:
+    src: index.html
+    dest: "/var/www/{{ your_domain }}/index.html"
+    mode: '0644'

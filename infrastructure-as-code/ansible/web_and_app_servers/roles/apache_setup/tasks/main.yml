@@ -1,40 +1,11 @@
 ---
-- name: Update system
-  ansible.builtin.apt:
-    update_cahe: yes
+- name: Configure apache on Debian OS
+  import_tasks: apache_on_debian.yml
   when: ansible_os_family == "Debian"
+  tags: ubuntu
 
-- name: Update System
+- name: Configure apache on Fedora OS
   ansible.builtin.yum:
     update_cache: yes
   when: ansible_os_family == "RedHat"
-
-- name: Ensure Apache is installed
-  ansible.builtin.apt:
-    name: apache2
-    state: present
-  when: ansible_os_family == "Debian"
-
-- name: Ensure Apache is installed
-  ansible.builtin.yum:
-    name: httpd
-    state: present 
-  when: ansible_os_family == "RedHat"
-
-- name: Start and enable Apache service 
-  ansible.builtin.service: 
-    name: "{{ ansible_os_family == 'Debian' and 'apache2' or 'httpd' }}"
-    state: started 
-    enabled: yes 
-
-- name: Create a Directory for the Website
-  ansible.builtin.file:
-    path: "/var/www/{{ your_domain }}"
-    state: directory
-    mode: '0755'
-
-- name: Copy custom index.html
-  ansible.builtin.copy:
-    src: index.yml
-    dest: "/var/www/{{ your_domain }}/index.html"
-    mode: '0644'
+  tags: centos
