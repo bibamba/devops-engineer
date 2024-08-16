@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles: 
+    - tomcat_server_setup
