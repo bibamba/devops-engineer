@@ -1,0 +1,3 @@
+[appservers]
+bbtapp01  ansible_host=192.168.16.22  ansible_connection=ssh  ansible_user=bbtadmin
+bbtapp02  ansible_host=192.168.16.23  ansible_connection=ssh  ansible_user=bbtadmin

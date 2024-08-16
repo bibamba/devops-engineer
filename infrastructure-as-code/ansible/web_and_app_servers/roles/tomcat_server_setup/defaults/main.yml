@@ -1,0 +1,4 @@
+---
+java_package: java-1.8.0-openjdk
+tomcat_version: 8.5.93
+tomcat_install_dir: /opt/tomcat
