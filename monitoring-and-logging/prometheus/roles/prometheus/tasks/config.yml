@@ -1,0 +1,13 @@
+---
+- name: Copy Prometheus configuration file
+  ansible.builtin.copy:
+    src: "files/prometheus.yml"
+    dest: "{{ prometheus_config_file }}"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+
+- name: Create Prometheus systemd service
+  ansible.builtin.template:
+    src: "prometheus.service.j2"
+    dest: "{{ prometheus_service_file }}"
+  notify: Restart Prometheus
