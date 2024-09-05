@@ -1,0 +1,17 @@
+---
+- name: Add the jenkins repository key to your system
+  ansible.builtin.get_url:
+    src: "{{ jenkins_repo_key }}"
+    dest: "{{ keyrings_file }}"
+
+- name: somerepo | apt source
+  ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by={{ keyrings_file }}] https://pkg.jenkins.io/debian-stable binary/"
+        state: present
+
+- name: Update repositories cache and install "Jenkins" package
+  ansible.builtin.apt:
+    name: jenkins
+    update_cache: yes
+  notify:
+    - restart jenkins

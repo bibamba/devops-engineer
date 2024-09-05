@@ -1,0 +1,8 @@
+---
+- name: Update repositories cache and install "JRE" package
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - fontconfig 
+    - openjdk-17-jre
