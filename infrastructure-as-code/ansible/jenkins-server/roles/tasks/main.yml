@@ -1,0 +1,19 @@
+---
+- name: Install Java (Jenkins dependency)
+  apt:
+    name: openjdk-11-jdk
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Install Jenkins
+  apt:
+    deb: "https://pkg.jenkins.io/debian-stable/jenkins.io.key"
+    state: present
+  notify:
+    - restart jenkins
+
+- name: Start and enable Jenkins service
+  systemd:
+    name: jenkins
+    enabled: yes
+    state: started

@@ -1,0 +1,5 @@
+---
+- hosts: jenkins_servers
+  become: true
+  roles:
+    - jenkins
