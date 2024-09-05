@@ -44,18 +44,20 @@
 
 - name: Copy prometheus and promtool binary to the install Directory
   ansible.builtin.copy:
-    src: "{{ prometheus_temp_dir }}/{{ items }}"
+    src: "{{ prometheus_temp_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}"
     dest: "{{ prometheus_install_dir }}"
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
+    remote_src: yes
   with_items: 
     - prometheus
     - promtool
 
 - name:  Move consoles and console_libraries to /etc/prometheus
   ansible.builtin.copy:
-    src: "{{ prometheus_temp_dir }}/{{ items }}"
+    src: "{{ prometheus_temp_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}"
     dest: "{{ prometheus_config_dir }}"
+    remote_src: yes
   with_items: 
     - console_libraries  
     - consoles

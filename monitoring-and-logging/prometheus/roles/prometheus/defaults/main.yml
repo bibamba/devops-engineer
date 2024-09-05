@@ -1,2 +1,11 @@
 ---
 prometheus_port: 9090
+prometheus_version: "2.31.1"
+prometheus_user: "prometheus"
+prometheus_group: "prometheus"
+prometheus_install_dir: "/usr/local/bin"
+prometheus_data_dir: "/var/lib/prometheus"
+prometheus_config_dir: "/etc/prometheus"
+prometheus_config_file: "/etc/prometheus/prometheus.yml"
+prometheus_service_file: "/etc/systemd/system/prometheus.service"
+prometheus_temp_dir: "/tmp/prometheus-files"

@@ -1,2 +1,2 @@
 [prometheus]
-prometheus-server ansible_host=your_server_ip
+prometheus-server ansible_host=your_server_ip ansible_ssh_user='username'
