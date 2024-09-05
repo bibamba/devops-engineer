@@ -1,9 +1,35 @@
 ---
-- name: Create Prometheus user and group
+- name: Create Prometheus group
+  ansible.builtin.group:
+    name: "{{ prometheus_group }}"
+    state: present
+    
+- name: Create Prometheus user
   ansible.builtin.user:
     name: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
     shell: /sbin/nologin
+
+- name: Create Prometheus Data Directory
+  ansible.builtin.file:
+    path: "{{ prometheus_data_dir }}"
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    recurse: yes
+
+- name: Create Prometheus config directory
+  ansible.builtin.file:
+    path: "{{ prometheus_config_dir }}"
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    recurse: yes
+
+- name: Create Prometheus Temp Driectory
+  ansible.builtin.file:
+    path: "{{ prometheus_temp_dir }}"
+    state: directory
 
 - name: Download Prometheus
   ansible.builtin.get_url:
@@ -13,12 +39,23 @@
 - name: Extract Prometheus
   ansible.builtin.unarchive:
     src: "/tmp/prometheus.tar.gz"
-    dest: "{{ prometheus_install_dir }}"
+    dest: "{{ prometheus_temp_dir }}"
     remote_src: yes
 
-- name: Set ownership
-  ansible.builtin.file:
-    path: "{{ prometheus_install_dir }}"
+- name: Copy prometheus and promtool binary to the install Directory
+  ansible.builtin.copy:
+    src: "{{ prometheus_temp_dir }}/{{ items }}"
+    dest: "{{ prometheus_install_dir }}"
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
-    recurse: yes
+  with_items: 
+    - prometheus
+    - promtool
+
+- name:  Move consoles and console_libraries to /etc/prometheus
+  ansible.builtin.copy:
+    src: "{{ prometheus_temp_dir }}/{{ items }}"
+    dest: "{{ prometheus_config_dir }}"
+  with_items: 
+    - console_libraries  
+    - consoles
