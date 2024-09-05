@@ -1,7 +1,7 @@
 ---
 - name: Add the jenkins repository key to your system
   ansible.builtin.get_url:
-    src: "{{ jenkins_repo_key }}"
+    url: "{{ jenkins_repo_key }}"
     dest: "{{ keyrings_file }}"
 
 - name: somerepo | apt source
