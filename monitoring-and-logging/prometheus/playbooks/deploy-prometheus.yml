@@ -1,4 +1,11 @@
 ---
 - hosts: prometheus
   roles:
-    - prometheus
+    - role: prometheus
+      tags:
+        - prom
+
+- hosts: nodes
+  roles:
+    - role: node_exporter
+      tags: nodexp 
