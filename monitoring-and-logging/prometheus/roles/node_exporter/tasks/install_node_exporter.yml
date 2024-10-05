@@ -1,0 +1,28 @@
+---
+- name: Permit traffic on port 9200
+  ansible.posix.firewalld:
+    port: 9200/tcp
+    zone: public
+    permanent: true
+    state: enabled
+
+- name: Download and unarchive Node_exporter
+  ansible.builtin.unarchive:
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ NODE_EXPORTER_VERSION }}/node_exporter-{{ NODE_EXPORTER_VERSION }}.linux-amd64.tar.gz"
+    dest: "/tmp/node_exporter-{{ NODE_EXPORTER_VERSION }}.linux-amd64"
+    remote_src: yes
+
+- name: Install Node Exporter
+  ansible.builtin.copy:
+    src: "/tmp/node_exporter-{{ NODE_EXPORTER_VERSION }}.linux-amd64/node_exporter"
+    dest: "{{ NODE_EXPORTER_BIN_DIR }}"
+    owner: "{{ NODE_EXPORTER_USER }}"
+    group: "{{ NODE_EXPORTER_GROUP }}"
+    remote_src: yes
+
+- name: Setup Node Exporter Service
+  ansible.builtin.template:
+    src: node_exporter.service.j2
+    dest: "{{ NODE_EXPORTER_SERVICE_CONFIG_FILE }}"
+    mode: '0644'
+  notify: Restart Node Exporter

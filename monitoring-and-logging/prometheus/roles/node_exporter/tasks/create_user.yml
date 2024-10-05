@@ -1,0 +1,20 @@
+---
+- name: Create group node_exporter
+  ansible.builtin.group:
+    name: "{{ NODE_EXPORTER_GROUP }}"
+    satte: present 
+    
+- name: Create user node_exporter
+  ansible.builtin.user: 
+    name: "{{ NODE_EXPORTER_USER }}"
+    group: "{{ NODE_EXPORTER_GROUP }}"
+    create_home: false
+    shell: /bin/false
+
+- name: create node exporter directory
+  ansible.builtin.file:
+    path: "{{ NODE_EXPORTER_DIR }}"
+    state: directory
+    recurse: yes
+    owner: "{{ NODE_EXPORTER_USER }}"
+    group: "{{ NODE_EXPORTER_GROUP }}"
