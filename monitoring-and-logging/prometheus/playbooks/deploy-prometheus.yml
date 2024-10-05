@@ -8,4 +8,5 @@
 - hosts: nodes
   roles:
     - role: node_exporter
-      tags: nodexp 
+      tags: 
+        - nodexp 
